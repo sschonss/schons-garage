@@ -35,7 +35,7 @@ export default function FooterWithIcons({ show }) {
 
 const styles = StyleSheet.create({
   footerStyle: {
-    position: "fixed",
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,

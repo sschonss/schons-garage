@@ -1,11 +1,12 @@
+import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
   Animated,
 } from "react-native";
-import React, { useState } from "react";
 import Scrollable from "@/components/containers/Scrollable";
 import HeaderWithTitle from "@/components/headers/HeaderWithTitle";
 import FooterWithIcons from "@/components/footer/FooterIcons";
@@ -20,51 +21,57 @@ export default function Home() {
   };
 
   return (
-    <Scrollable>
-      <HeaderWithTitle title={"Schons Garage"} />
+    <View style={styles.container}>
+      <Scrollable>
+        <HeaderWithTitle title={"Schons Garage"} />
 
-      <View style={styles.container}>
-        {data.marcas.map((marca) => (
-          <TouchableOpacity
-            key={marca.marca}
-            onPress={() => toggleMarca(marca)}
-            activeOpacity={0.7}
-          >
-            <Animated.View
-              style={[
-                styles.marcaContainer,
-                {
-                  backgroundColor:
-                    expandedMarca === marca ? "#f0f0f0" : "transparent",
-                },
-              ]}
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {data.marcas.map((marca) => (
+            <TouchableOpacity
+              key={marca.marca}
+              onPress={() => toggleMarca(marca)}
+              activeOpacity={0.7}
             >
-              <Animated.Text style={styles.marcaText}>
-                {marca.marca}
-              </Animated.Text>
-            </Animated.View>
-            {expandedMarca === marca &&
-              marca.carros.map((carro, idx) => (
-                <CardCar
-                  key={idx}
-                  nome={carro.nome}
-                  ano={carro.ano}
-                  valor={carro.valor}
-                />
-              ))}
-          </TouchableOpacity>
-        ))}
-      </View>
+              <Animated.View
+                style={[
+                  styles.marcaContainer,
+                  {
+                    backgroundColor:
+                      expandedMarca === marca ? "#f0f0f0" : "transparent",
+                  },
+                ]}
+              >
+                <Animated.Text style={styles.marcaText}>
+                  {marca.marca}
+                </Animated.Text>
+              </Animated.View>
+              {expandedMarca === marca &&
+                marca.carros.map((carro, idx) => (
+                  <CardCar
+                    key={idx}
+                    nome={carro.nome}
+                    ano={carro.ano}
+                    valor={carro.valor}
+                  />
+                ))}
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </Scrollable>
 
       <FooterWithIcons show={true} />
-    </Scrollable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 80,
+    paddingHorizontal: 16,
   },
   marcaContainer: {
     borderRadius: 10,
