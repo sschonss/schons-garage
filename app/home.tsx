@@ -1,24 +1,15 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Animated,
-} from "react-native";
+import React from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
 import Scrollable from "@/components/containers/Scrollable";
 import HeaderWithTitle from "@/components/headers/HeaderWithTitle";
 import FooterWithIcons from "@/components/footer/FooterIcons";
-import data from "@/consts/data.json";
+import { useCarService } from "@/services/CarServices";
+import MarcaItem from "@/components/MarcaItem";
 import CardCar from "@/components/containers/CardCar";
+import data from "@/consts/data.json";
 
 export default function Home() {
-  const [expandedMarca, setExpandedMarca] = useState(null);
-
-  const toggleMarca = (marca) => {
-    setExpandedMarca((prevMarca) => (prevMarca === marca ? null : marca));
-  };
+  const { expandedMarca, toggleMarca, data: carData } = useCarService(data);
 
   return (
     <View style={styles.container}>
@@ -26,36 +17,23 @@ export default function Home() {
         <HeaderWithTitle title={"Schons Garage"} />
 
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          {data.marcas.map((marca) => (
-            <TouchableOpacity
-              key={marca.marca}
+          {carData.marcas.map((marca, index) => (
+            <MarcaItem
+              key={index}
+              marca={marca}
               onPress={() => toggleMarca(marca)}
-              activeOpacity={0.7}
-            >
-              <Animated.View
-                style={[
-                  styles.marcaContainer,
-                  {
-                    backgroundColor:
-                      expandedMarca === marca ? "#f0f0f0" : "transparent",
-                  },
-                ]}
-              >
-                <Animated.Text style={styles.marcaText}>
-                  {marca.marca}
-                </Animated.Text>
-              </Animated.View>
-              {expandedMarca === marca &&
-                marca.carros.map((carro, idx) => (
-                  <CardCar
-                    key={idx}
-                    nome={carro.nome}
-                    ano={carro.ano}
-                    valor={carro.valor}
-                  />
-                ))}
-            </TouchableOpacity>
+              isExpanded={expandedMarca === marca}
+            />
           ))}
+          {expandedMarca &&
+            expandedMarca.carros.map((carro, idx) => (
+              <CardCar
+                key={idx}
+                nome={carro.nome}
+                ano={carro.ano}
+                valor={carro.valor}
+              />
+            ))}
         </ScrollView>
       </Scrollable>
 
@@ -70,17 +48,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 80,
-    paddingHorizontal: 16,
-  },
-  marcaContainer: {
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  marcaText: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingVertical: 12,
     paddingHorizontal: 16,
   },
 });
