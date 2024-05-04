@@ -29,7 +29,7 @@ const CarModalContent: React.FC<CarModalContentProps> = ({
           </View>
         ))}
       </ScrollView>
-      <Button title="Close" onPress={onClose} />
+      <Button title="Fechar" onPress={onClose} />
     </View>
   );
 };

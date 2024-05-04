@@ -55,8 +55,9 @@ export default function Home({ navigation }: HomeProps) {
       <SectionList
         style={{
           flex: 1,
-          maxHeight: "90%",
+          maxHeight: "95%",
           padding: 10,
+          marginBottom: 10,
         }}
         sections={[{ title: "Brands", data: groupedData }]}
         renderItem={({ item }) => (
@@ -73,7 +74,6 @@ export default function Home({ navigation }: HomeProps) {
         brand={selectedBrand}
         onClose={closeModal}
       />
-      <FooterWithIcons show={true} />
     </View>
   );
 }
