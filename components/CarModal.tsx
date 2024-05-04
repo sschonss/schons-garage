@@ -2,7 +2,24 @@ import React from "react";
 import { Modal, View, StyleSheet } from "react-native";
 import CarModalContent from "./CarModalContent";
 
-export default function CarModal({ visible, cars, brand, onClose }) {
+interface Car {
+  brand: string;
+  model: string;
+}
+
+interface CarModalProps {
+  visible: boolean;
+  cars: Car[];
+  brand: string;
+  onClose: () => void;
+}
+
+export default function CarModal({
+  visible,
+  cars,
+  brand,
+  onClose,
+}: CarModalProps) {
   return (
     <Modal
       animationType="slide"
