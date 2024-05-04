@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 
@@ -7,5 +7,15 @@ type HeaderWithTitleProps = {
 };
 
 export default function HeaderWithTitle({ title }: HeaderWithTitleProps) {
-  return <Stack.Screen options={{ headerShown: true, title }} />;
+  return (
+    <Stack.Screen
+      options={{
+        headerShown: true,
+        title,
+        headerRight: () => {
+          return <Button title="A" />;
+        },
+      }}
+    />
+  );
 }

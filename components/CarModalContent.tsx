@@ -1,7 +1,23 @@
 import React from "react";
 import { Text, View, ScrollView, Button, StyleSheet } from "react-native";
 
-export default function CarModalContent({ cars, brand, onClose }) {
+interface Car {
+  id: number;
+  model: string;
+  year: number;
+}
+
+interface CarModalContentProps {
+  cars: Car[];
+  brand: string;
+  onClose: () => void;
+}
+
+const CarModalContent: React.FC<CarModalContentProps> = ({
+  cars,
+  brand,
+  onClose,
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cars by {brand}</Text>
@@ -16,7 +32,7 @@ export default function CarModalContent({ cars, brand, onClose }) {
       <Button title="Close" onPress={onClose} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -38,3 +54,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default CarModalContent;

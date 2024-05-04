@@ -12,7 +12,7 @@ import {
 
 type FormInput = {
   title: string;
-  showKey?: boolean; // Propriedade opcional para indicar se a chave deve ser exibida
+  showKey?: boolean;
 } & TouchableOpacityProps;
 
 export default function FormButton({
@@ -23,7 +23,7 @@ export default function FormButton({
   return (
     <TouchableOpacity style={styles.container} {...rest}>
       <View style={styles.content}>
-        {showKey && ( // Renderiza a chave apenas se showKey for true
+        {showKey && (
           <Image
             source={require("../../assets/images/key.png")}
             style={styles.key}
@@ -44,16 +44,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   content: {
-    flexDirection: "row", // Para alinhar o ícone e o texto lado a lado
-    alignItems: "center", // Para centralizar verticalmente o ícone e o texto
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     color: "black",
     textAlign: "center",
   },
   key: {
-    width: 24, // Ajuste conforme necessário
-    height: 24, // Ajuste conforme necessário
-    marginRight: 8, // Espaçamento entre o ícone e o texto
+    width: 24,
+    height: 24,
+    marginRight: 8,
   },
 });

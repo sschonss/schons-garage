@@ -1,11 +1,21 @@
 import React from "react";
-import { FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { SectionList, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function CarList({ data, onPress }) {
+interface Car {
+  brand: string;
+  model: string;
+}
+
+interface CarListProps {
+  data: { title: string; data: Car[] }[];
+  onPress: (brand: string) => void;
+}
+
+export default function CarList({ data, onPress }: CarListProps) {
   return (
-    <FlatList
+    <SectionList
       style={styles.container}
-      data={data}
+      sections={data}
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.item}
@@ -13,6 +23,9 @@ export default function CarList({ data, onPress }) {
         >
           <Text>{item.brand}</Text>
         </TouchableOpacity>
+      )}
+      renderSectionHeader={({ section: { title } }) => (
+        <Text style={styles.sectionHeader}>{title}</Text>
       )}
       keyExtractor={(item) => item.brand}
     />
@@ -30,5 +43,11 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: "#eee",
     borderRadius: 10,
+  },
+  sectionHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    backgroundColor: "#ccc",
+    padding: 10,
   },
 });
