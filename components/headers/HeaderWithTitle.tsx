@@ -1,6 +1,6 @@
 import { ActionSheetIOS, Platform, Alert } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -18,7 +18,7 @@ export default function HeaderWithTitle({ title }: HeaderWithTitleProps) {
     (index: number) => {
       switch (index) {
         case 0:
-          navigation.navigate("index");
+          router.dismissAll();
           break;
         case 1:
           navigation.navigate(currentRoute !== "about" ? "about" : "home");
