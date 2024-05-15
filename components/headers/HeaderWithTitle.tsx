@@ -1,8 +1,9 @@
 import { ActionSheetIOS, Platform, Alert } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import useAuth from "@/firebase/hooks/useAuth";
 
 type HeaderWithTitleProps = {
   title: string;
@@ -11,14 +12,20 @@ type HeaderWithTitleProps = {
 export default function HeaderWithTitle({ title }: HeaderWithTitleProps) {
   const navigation = useNavigation();
   const route = useRoute();
+  const { logout } = useAuth();
 
   const currentRoute = route.name;
+
+  const handleLogout = async () => {
+    await logout();
+    router.dismissAll();
+  };
 
   const handleAction = useCallback(
     (index: number) => {
       switch (index) {
         case 0:
-          navigation.navigate("index");
+          handleLogout();
           break;
         case 1:
           navigation.navigate(currentRoute !== "about" ? "about" : "home");
@@ -77,6 +84,7 @@ export default function HeaderWithTitle({ title }: HeaderWithTitleProps) {
             onPress={showActionSheet}
           />
         ),
+        headerLeft: () => "",
       }}
     />
   );

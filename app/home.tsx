@@ -4,7 +4,6 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useCarService } from "../services/CarService";
 import data from "../services/data";
 import HeaderWithTitle from "@/components/headers/HeaderWithTitle";
-import FooterWithIcons from "@/components/footer/FooterIcons";
 import BrandItem from "@/components/BrandItem";
 import CarModal from "@/components/CarModal";
 
