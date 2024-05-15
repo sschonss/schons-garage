@@ -1,25 +1,29 @@
 import { View, Text, TextInput, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useRouter } from "expo-router";
 import FullScreen from "@/components/containers/FullScreen";
 import FormInput from "@/components/form/FormInput";
 import Card from "@/components/containers/Card";
 import FormButton from "@/components/form/FormButton";
 import { Spacing } from "@/consts/spacing";
-import { Colors } from "@/consts/colors";
+import useAuth from "@/firebase/hooks/useAuth";
 
 export default function index() {
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
+  const { login, user } = useAuth();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (username == "teste" && password == "123") {
+  useEffect(() => {
+    if (user) {
       router.push("/home");
-    } else {
-      alert("Usuário ou senha incorreto(s)");
     }
+  }, [user]);
+
+  const handleLogin = () => {
+    login(email, password);
   };
 
   return (
@@ -28,11 +32,7 @@ export default function index() {
         <View style={styles.containerLogo}>
           <Image source={require("../assets/images/logo.png")} />
         </View>
-        <FormInput
-          label="Username"
-          value={username}
-          onChangeText={setUsername}
-        />
+        <FormInput label="Email" value={email} onChangeText={setEmail} />
         <FormInput
           label="Password"
           value={password}
